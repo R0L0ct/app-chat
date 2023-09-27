@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=rolo
+      - POSTGRES_PASSWORD=admin123
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+volumes:
+  postgres-db:
