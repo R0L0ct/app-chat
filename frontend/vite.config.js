@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/socket.io": {
-        target: "http://localhost:3000",
+        target: "https://app-chat-backend-ean1.onrender.com",
         ws: true,
       },
     },
