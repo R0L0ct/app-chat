@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { useMediaQuery } from "react-responsive";
 
 const socket = io("https://app-chat-backend-ean1.onrender.com", {
   withCredentials: true,
@@ -8,7 +9,12 @@ const socket = io("https://app-chat-backend-ean1.onrender.com", {
 function App() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-
+  const isCellphone = useMediaQuery({
+    query: "(max-width: 505px)",
+  });
+  const isCellphone2 = useMediaQuery({
+    query: "(max-width: 322px)",
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
     const newMessage = {
@@ -37,26 +43,24 @@ function App() {
     >
       <form
         style={{
-          height: "800px",
-          position: "relative",
-          width: "500px",
+          height: isCellphone ? "100%" : "800px",
+          width: isCellphone ? "100%" : "500px",
           backgroundImage:
             "url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/EL_BANANERO.jpg/1200px-EL_BANANERO.jpg)",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
+          backgroundSize: isCellphone ? " contain" : "cover",
+          backgroundRepeat: isCellphone ? "repeat" : "no-repeat",
+          padding: "10px",
         }}
         onSubmit={handleSubmit}
-        className="bg-zinc-900 p-10 rounded-md"
+        className="bg-zinc-900 rounded-md"
       >
         <div
           style={{
-            position: "absolute",
-            top: "0",
-            left: "100px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            width: "100%",
           }}
         >
           <h1 className="text-2xl font-extrabold my-2 text-red-950">
@@ -68,6 +72,9 @@ function App() {
             onChange={(e) => setMessage(e.target.value)}
             className="border-2 border-zinc-500 p-2 w-80 text-black"
             value={message}
+            style={{
+              width: isCellphone2 ? "100%" : "300px",
+            }}
           />
           <button className="bg-orange-500 rounded mt-2 p-1 font-bold">
             Send
@@ -78,7 +85,6 @@ function App() {
             width: "100%",
             overflow: "auto",
             height: "80%",
-            marginTop: "100px",
           }}
         >
           {messages.map((mensajes, i) => {
