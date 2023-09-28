@@ -18,11 +18,17 @@ const aserver = new ApolloServer({
 });
 
 await aserver.start();
-app.use(cors());
 app.use("/graphql", cors(), json(), expressMiddleware(aserver));
 
 const server = http.createServer(app);
-const io = new SocketServer(server);
+const io = new SocketServer(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Access-Control-Allow-Origin"],
+    credentials: true,
+  },
+});
 
 io.on("connection", (socket) => {
   console.log("a user connected");
