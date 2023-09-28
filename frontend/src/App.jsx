@@ -17,6 +17,7 @@ function App() {
     };
     setMessages([...messages, newMessage]);
     socket.emit("message", message);
+    setMessage("");
   };
 
   const receiveMessage = (message) =>
@@ -30,17 +31,56 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen bg-zinc-800 text-white flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="bg-zinc-900 p-10">
-        <h1 className="text-2xl font-bold my-2">Chat Bananero</h1>
-        <input
-          type="text"
-          placeholder="Write your message..."
-          onChange={(e) => setMessage(e.target.value)}
-          className="border-2 border-zinc-500 p-2 w-full text-black"
-        />
-        <button>Send</button>
-        <ul>
+    <div
+      style={{ minHeight: "100vh" }}
+      className="h-screen bg-zinc-800 text-white flex items-center justify-center"
+    >
+      <form
+        style={{
+          height: "800px",
+          position: "relative",
+          width: "500px",
+          backgroundImage:
+            "url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/EL_BANANERO.jpg/1200px-EL_BANANERO.jpg)",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+        onSubmit={handleSubmit}
+        className="bg-zinc-900 p-10 rounded-md"
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: "0",
+            left: "100px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1 className="text-2xl font-extrabold my-2 text-red-950">
+            Chat Bananero
+          </h1>
+          <input
+            type="text"
+            placeholder="Dale pretensioso, escribi algo!"
+            onChange={(e) => setMessage(e.target.value)}
+            className="border-2 border-zinc-500 p-2 w-80 text-black"
+            value={message}
+          />
+          <button className="bg-orange-500 rounded mt-2 p-1 font-bold">
+            Send
+          </button>
+        </div>
+        <ul
+          style={{
+            width: "100%",
+            overflow: "auto",
+            height: "80%",
+            marginTop: "100px",
+          }}
+        >
           {messages.map((mensajes, i) => {
             return (
               <li
@@ -49,10 +89,10 @@ function App() {
                   mensajes.from === "Me" ? ` bg-sky-700 ` : `bg-black ml-auto`
                 }`}
               >
-                <span className="text-xs text-slate-700 font-bold">
-                  {mensajes.from}
-                </span>
-                :{mensajes.body}
+                <p className="text-xs text-red-500 font-bold">
+                  {mensajes.from !== "Me" ? "ANOnymous" : "Me"}
+                </p>
+                {mensajes.body}
               </li>
             );
           })}
