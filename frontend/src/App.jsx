@@ -77,7 +77,7 @@ function App() {
             }}
           />
           <button className="bg-orange-500 rounded mt-2 p-1 font-bold">
-            Send
+            SAPE
           </button>
         </div>
         <ul
