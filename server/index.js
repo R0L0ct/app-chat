@@ -23,7 +23,7 @@ app.use("/graphql", cors(), json(), expressMiddleware(aserver));
 const server = http.createServer(app);
 const io = new SocketServer(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://app-chat-frontend.onrender.com",
     methods: ["GET", "POST"],
     allowedHeaders: ["Access-Control-Allow-Origin"],
     credentials: true,
