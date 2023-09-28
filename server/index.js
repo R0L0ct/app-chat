@@ -18,7 +18,7 @@ const aserver = new ApolloServer({
 });
 
 await aserver.start();
-
+app.use(cors());
 app.use("/graphql", cors(), json(), expressMiddleware(aserver));
 
 const server = http.createServer(app);
@@ -28,10 +28,10 @@ io.on("connection", (socket) => {
   console.log("a user connected");
 
   socket.on("message", async (body) => {
-    let query =
-      "INSERT INTO messages(id, messagecontent) VALUES ($1, $2) RETURNING *";
-    let values = [socket.id, body];
-    let response = await pool.query(query, values);
+    // let query =
+    //   "INSERT INTO messages(id, messagecontent) VALUES ($1, $2) RETURNING *";
+    // let values = [socket.id, body];
+    // let response = await pool.query(query, values);
 
     socket.broadcast.emit("message", {
       body,
